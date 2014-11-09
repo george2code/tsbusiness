@@ -35,15 +35,6 @@
                 @Html.ActionLink("TrustSystems Business", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-
-
-
-
                 <ul class="nav navbar-nav pull-right">
                     <li class="divider-vertical"></li>
                     <li class="dropdown">
@@ -75,9 +66,9 @@
                     <!--Sidebar content-->
                     <br />
                     <ul class="nav nav-pills nav-stacked" role="tablist">
-                        <li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
+                        <li role="presentation" class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
                         <li role="presentation"><a href="#"><span class="glyphicon glyphicon-envelope"></span> Invitations</a></li>
-                        <li role="presentation"><a href="#"><span class="glyphicon glyphicon-th"></span> Modules</a></li>
+                        <li role="presentation"><a href="/modules/index"><span class="glyphicon glyphicon-th"></span> Modules</a></li>
                         <li role="presentation"><a href="#"><span class="glyphicon glyphicon-star-empty"></span> Reviews</a></li>
                         <li role="presentation"><a href="#"><span class="glyphicon glyphicon-cog"></span> Integrations</a></li>
                         <li role="presentation"><a href="#"><span class="glyphicon glyphicon-align-left"></span> Statistics</a></li>

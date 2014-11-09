@@ -22,3 +22,10 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.modules-menu a {
+    color: #555;
+}
+.modules-menu a:hover {
+    text-decoration: none;
+}
