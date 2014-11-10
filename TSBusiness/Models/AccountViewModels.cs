@@ -59,5 +59,10 @@ namespace TSBusiness.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string PhoneNumber { get; set; }
+        public string Website    { get; set; }
+        public string CompanyName { get; set; }
+        public int CountryId { get; set; }
     }
 }

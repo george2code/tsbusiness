@@ -29,3 +29,20 @@ textarea {
 .modules-menu a:hover {
     text-decoration: none;
 }
+
+
+
+
+.register-info ul {
+    list-style-type: none;
+    margin-top: 30px;
+}
+
+.register-info ul li {
+    font-size: 18px;
+    color: grey;
+    margin-bottom: 5px;
+}
+.register-info ul li span {
+    color: #000;
+}

@@ -1,41 +1,81 @@
 ﻿@model TSBusiness.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
-}
-
-<h2>@ViewBag.Title.</h2>
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary()
-    <div class="form-group">
-        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
+    ViewBag.Title = "Ready to collect reviews?";
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+<div class="row">
+
+    <div class="col-xs-12 col-md-8 register-info">
+        <h1>@ViewBag.Title</h1>
+        <h3>Why wait? Let's get started!</h3>
+        <p>Join TrustSystems and reap the benefits. You'll always be able to access and reply to your reviews at no cost.</p>
+
+        <ul>
+            <li><span class="glyphicon glyphicon-globe"></span> Collect reviews from up to 300 customers today. It's easy.</li>
+            <li><span class="glyphicon glyphicon-thumbs-up"></span> Engage with customers by responding to feedback in one place.</li>
+            <li><span class="glyphicon glyphicon-stats"></span> Boost sales by displaying reviews on your website to drive conversion.</li>
+            <li><span class="glyphicon glyphicon-eye-open"></span> Watch your Google Seller Rating climb, and benefit from lower online marketing costs.</li>
+        </ul>
+    </div>
+    
+    <div class="col-xs-6 col-md-4 bg-info">
+        <!-- form -->
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <br />
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Login" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm password" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Website, new { @class = "form-control", @placeholder = "Website" })
+                    </div>
+                </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "Telephone" })
+                    </div>
+                </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @placeholder = "Company name" })
+                    </div>
+                </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.DropDownList("Timezone", TimeZoneInfo.GetSystemTimeZones().Select(tz => new SelectListItem()
+                    {
+                        Text = tz.DisplayName,
+                        Value = tz.Id
+                    }), new { @class = "form-control" })
+                </div>
+                </div>
+
+            <div class="form-group">
+                <div class="text-center">
+                    <input type="submit" class="btn btn-success btn-lg" value="Let's get started!" />
+                </div>
+            </div>
+            <br />
+        }
+    </div>
+</div>
