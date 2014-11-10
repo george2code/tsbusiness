@@ -20,14 +20,53 @@
 
 
 
+<br />
+<h4>Show the template for</h4>
 
-<div class="panel panel-default">
-    <div class="panel-body">
-        You can use special placeholders in the email which will be replaced when we send the email:<br />
-        <strong>[Name]</strong> The name of the customer or ”customer” if unknown<br />
-        <strong>[Link]</strong> The one-click review link<br />
-        <strong>[DomainName]</strong> The name of the domain<br />
-        <strong>[Order]</strong> The order number<br />
-        <strong>[UnsubscribeLink]</strong> The unsubscribe link.
+<div class="btn-group">
+    <button type="button" class="btn btn-default">English</button>
+    <button type="button" class="btn btn-default">Russian</button>
+</div> or <button type="button" class="btn btn-primary">Revert all templaes to default</button>
+
+<br />
+<br />
+<hr />
+
+
+<!-- Template -->
+<h4>Template Settings</h4>
+<br />
+<form role="form">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Delay</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="in days">
     </div>
-</div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Subject</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="" value="Ваше мнение покупателя  важно для  [DomainName]">
+    </div>
+    <div class="form-group">
+        <textarea class="form-control" rows="6"></textarea>
+    </div>
+    
+    
+    <div class="panel panel-default">
+        <div class="panel-body">
+            You can use special placeholders in the email which will be replaced when we send the email:<br />
+            <strong>[Name]</strong> The name of the customer or ”customer” if unknown<br />
+            <strong>[Link]</strong> The one-click review link<br />
+            <strong>[DomainName]</strong> The name of the domain<br />
+            <strong>[Order]</strong> The order number<br />
+            <strong>[UnsubscribeLink]</strong> The unsubscribe link.
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+
+<!-- end Template -->
+
+
+
