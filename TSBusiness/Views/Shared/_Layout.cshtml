@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -12,7 +13,6 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/site.js"></script>
-
 
     <script type="text/javascript">
         var appInsights=window.appInsights||function(config){
@@ -37,27 +37,7 @@
                 @Html.ActionLink("TrustSystems Business", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav pull-right">
-                    <li class="divider-vertical"></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle"
-                           data-toggle="dropdown"
-                           href="#">
-                            John Doe
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Account settings</a></li>
-                            <li><a href="#">Notifications</a></li>
-                            <li><a href="#">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-
-                <p class="navbar-text pull-right">
-                    @Html.ActionLink("my-website.ru", "Index", "Home", new { @class = "navbar-link" })
-                </p>
-
+                @{ Html.RenderPartial("~/Views/Shared/_LoginPartial.cshtml");  }
             </div>
         </div>
     </div>
