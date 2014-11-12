@@ -280,6 +280,10 @@
       <Project>{4f220a8f-13da-449f-8be9-d46e75997642}</Project>
       <Name>TSBusiness.BusinessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TSBusiness.DataLayer\TSBusiness.DataLayer.csproj">
+      <Project>{b759a533-53b7-41f4-9160-7612f5b96114}</Project>
+      <Name>TSBusiness.DataLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
