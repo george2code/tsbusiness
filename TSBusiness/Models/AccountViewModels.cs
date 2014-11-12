@@ -12,6 +12,21 @@ namespace TSBusiness.Models
         public string UserName { get; set; }
     }
 
+    public class SettingsUserViewModel
+    {
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+        
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        public string UserImage { get; set; }
+
+        [Display(Name = "Country")]
+        public int CountryId { get; set; }
+        public IEnumerable<SelectListItem> CountryList { get; set; }
+    }
+
     public class ManageUserViewModel
     {
         [Required]

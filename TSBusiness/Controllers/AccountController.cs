@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using TSBusiness.BusinessLayer.Enums;
 using TSBusiness.Models;
+using System.IO;
 
 namespace TSBusiness.Controllers
 {
@@ -335,6 +336,71 @@ namespace TSBusiness.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult Settings()
+        {
+            var model = new SettingsUserViewModel();
+            IEnumerable<CountryType> actionTypes = Enum.GetValues(typeof(CountryType))
+                                                       .Cast<CountryType>();
+            model.CountryList = from action in actionTypes
+                                select new SelectListItem
+                                {
+                                    Text = action.ToString(),
+                                    Value = ((int)action).ToString()
+                                };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Settings(SettingsUserViewModel model)
+        {
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadPhoto(IEnumerable<HttpPostedFileBase> files)
+        {
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    // Verify that the user selected a file
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        // extract only the fielname
+                        var fileName = Path.GetFileName(file.FileName);
+                        // TODO: need to define destination
+                        var path = Path.Combine(Server.MapPath("~/Images/avatar"), fileName);
+                        file.SaveAs(path);
+
+                        
+                    }
+                }
+            }
+
+            return RedirectToAction("Settings", "Account", new { message = "uploaded" });
+        }
+
+        [HttpPost]
+        public ActionResult DeletePhoto(string photoFileName)
+        {
+            //Session["DeleteSuccess"] = "No";
+            var photoName = photoFileName;
+            string fullPath = Request.MapPath("~/Images/avatar/" + photoName);
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+                //Session["DeleteSuccess"] = "Yes";
+            }
+
+            return RedirectToAction("Settings", "Account", new { @message = "deleted" });
+        }
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins
