@@ -32,7 +32,7 @@
             @Html.ValidationSummary()
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Login" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
                 </div>
             </div>
             <div class="form-group">
@@ -48,27 +48,23 @@
             <div class="form-group">
                 <div class="col-md-12">
                     @Html.TextBoxFor(m => m.Website, new { @class = "form-control", @placeholder = "Website" })
-                    </div>
                 </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-12">
                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "Telephone" })
-                    </div>
                 </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-12">
                     @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", @placeholder = "Company name" })
-                    </div>
                 </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-12">
-                    @Html.DropDownList("Timezone", TimeZoneInfo.GetSystemTimeZones().Select(tz => new SelectListItem()
-                    {
-                        Text = tz.DisplayName,
-                        Value = tz.Id
-                    }), new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.CountryId, Model.CountryList, new { @class = "form-control"})
                 </div>
-                </div>
+            </div>
 
             <div class="form-group">
                 <div class="text-center">
@@ -79,3 +75,8 @@
         }
     </div>
 </div>
+
+<script type="text/javascript">
+    
+
+</script>

@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using TSBusiness.BusinessLayer.Enums;
 using TSBusiness.Models;
 
 namespace TSBusiness.Controllers
@@ -19,6 +23,7 @@ namespace TSBusiness.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+            UserManager.UserValidator = new UserValidator<ApplicationUser>(UserManager) { AllowOnlyAlphanumericUserNames = false };
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -41,7 +46,7 @@ namespace TSBusiness.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
+                var user = await UserManager.FindAsync(model.Email, model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -62,7 +67,17 @@ namespace TSBusiness.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            IEnumerable<CountryType> actionTypes = Enum.GetValues(typeof(CountryType))
+                                                       .Cast<CountryType>();
+            model.CountryList = from action in actionTypes
+                                select new SelectListItem
+                                {
+                                    Text = action.ToString(),
+                                    Value = ((int)action).ToString()
+                                };
+
+            return View(model);
         }
 
         //
@@ -74,7 +89,13 @@ namespace TSBusiness.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
+                var user = new ApplicationUser() {
+                    UserName = model.Email,
+                    WebSite = model.Website,
+                    CompanyName = model.CompanyName,
+                    CountryId = model.CountryId
+                };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
