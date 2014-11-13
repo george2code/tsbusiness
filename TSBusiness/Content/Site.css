@@ -46,3 +46,11 @@ textarea {
 .register-info ul li span {
     color: #000;
 }
+
+.uploaded_ava {
+    margin-bottom: 20px;
+    max-width: 300px;
+}
+
+.ava-image { margin: 5px 15px!important; }
+.ava-image img { width: 40px; height: 40px; }

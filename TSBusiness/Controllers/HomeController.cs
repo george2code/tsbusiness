@@ -1,12 +1,14 @@
 ﻿using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TSBusiness.DataLayer;
 using TSBusiness.DataLayer.Contract;
 using TSBusiness.DataLayer.Repository;
+using TSBusiness.Utils;
 
 namespace TSBusiness.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private IUnitOfWork uow = null;
         private UserRepository repo = null;
@@ -19,15 +21,12 @@ namespace TSBusiness.Controllers
 
         public ActionResult Index()
         {
-            var list = repo.GetAll();
-
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 

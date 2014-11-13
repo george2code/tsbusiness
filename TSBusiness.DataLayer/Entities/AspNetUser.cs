@@ -41,7 +41,7 @@ namespace TSBusiness.DataLayer.Entities
         public Nullable<int> CountryId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Nullable<int> UserImage { get; set; }
+        public string UserImage { get; set; }
     
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }

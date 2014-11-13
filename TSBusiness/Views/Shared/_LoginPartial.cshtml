@@ -1,10 +1,18 @@
 ﻿@using Microsoft.AspNet.Identity
+@using TSBusiness.Utils;
 
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
+
+        <p class="navbar-text pull-right ava-image">
+        @if (HttpContext.Current.Session["UserInfo"] != null)
+        {
+            @Html.Raw(((UserInfo) HttpContext.Current.Session["userinfo"]).GetAvatar())
+        }
+        </p>
 
         <ul class="nav navbar-nav pull-right">
             <li class="divider-vertical"></li>
@@ -26,7 +34,10 @@
         </ul>
 
         <p class="navbar-text pull-right">
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Home", new { @class = "navbar-link" })
+            @if (HttpContext.Current.Session["UserInfo"] != null)
+            {
+                @Html.ActionLink(((UserInfo) HttpContext.Current.Session["UserInfo"]).GetFullName(), "Settings", "Account", null, new {@class = "navbar-link"});
+            }
         </p>
     }
 }

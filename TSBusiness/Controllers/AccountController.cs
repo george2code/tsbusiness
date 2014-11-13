@@ -8,17 +8,26 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using TSBusiness.BusinessLayer.Enums;
+using TSBusiness.DataLayer;
+using TSBusiness.DataLayer.Contract;
+using TSBusiness.DataLayer.Repository;
 using TSBusiness.Models;
 using System.IO;
+using TSBusiness.Utils;
 
 namespace TSBusiness.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
+        private IUnitOfWork uow = null;
+        private UserRepository repo = null;
+
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
+            uow = new UnitOfWork();
+            repo = new UserRepository(uow);
         }
 
         public AccountController(UserManager<ApplicationUser> userManager)
@@ -51,6 +60,17 @@ namespace TSBusiness.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+
+                    // update session
+                    if (CurrentUser == null) {
+                        CurrentUser = new UserInfo() {
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            UserImage = user.UserImage,
+                            Email = user.UserName
+                        };
+                    }
+
                     return RedirectToLocal(returnUrl);
                 }
                 else
@@ -337,17 +357,29 @@ namespace TSBusiness.Controllers
             base.Dispose(disposing);
         }
 
-
+        [HttpGet]
         public ActionResult Settings()
         {
             var model = new SettingsUserViewModel();
-            IEnumerable<CountryType> actionTypes = Enum.GetValues(typeof(CountryType))
-                                                       .Cast<CountryType>();
-            model.CountryList = from action in actionTypes
+
+            var user = repo.SingleOrDefault(User.Identity.GetUserId());
+
+            if (user != null)
+            {
+                model.FirstName = user.FirstName ?? string.Empty;
+                model.LastName = user.LastName ?? string.Empty;
+                model.UserImage = user.UserImage ?? string.Empty;
+                if (user.CountryId.HasValue)
+                    model.CountryId = user.CountryId.Value;
+            }
+
+            IEnumerable<CountryType> countryTypes = Enum.GetValues(typeof(CountryType)).Cast<CountryType>();
+            model.CountryList = from action in countryTypes
                                 select new SelectListItem
                                 {
                                     Text = action.ToString(),
-                                    Value = ((int)action).ToString()
+                                    Value = ((int)action).ToString(),
+                                    Selected = (model.CountryId == (int)action)
                                 };
 
             return View(model);
@@ -356,6 +388,32 @@ namespace TSBusiness.Controllers
         [HttpPost]
         public ActionResult Settings(SettingsUserViewModel model)
         {
+            var user = repo.SingleOrDefault(User.Identity.GetUserId());
+
+            if (user != null)
+            {
+                if (model.FirstName != null)
+                {
+                    user.FirstName = model.FirstName;
+                }
+                if (model.LastName != null)
+                {
+                    user.LastName = model.LastName;
+                }
+
+                user.CountryId = model.CountryId;
+                repo.Update(user);
+            }
+
+
+            IEnumerable<CountryType> countryTypes = Enum.GetValues(typeof(CountryType)).Cast<CountryType>();
+            model.CountryList = from action in countryTypes
+                                select new SelectListItem {
+                                    Text = action.ToString(),
+                                    Value = ((int)action).ToString()
+                                };
+
+
             return View(model);
         }
 
@@ -377,7 +435,13 @@ namespace TSBusiness.Controllers
                         var path = Path.Combine(Server.MapPath("~/Images/avatar"), fileName);
                         file.SaveAs(path);
 
-                        
+                        // try to save into db
+                        var user = repo.SingleOrDefault(User.Identity.GetUserId());
+                        if (user != null)
+                        {
+                            user.UserImage = file.FileName;
+                            repo.Update(user);
+                        }
                     }
                 }
             }
@@ -396,6 +460,15 @@ namespace TSBusiness.Controllers
             {
                 System.IO.File.Delete(fullPath);
                 //Session["DeleteSuccess"] = "Yes";
+
+
+                // try to save into db
+                var user = repo.SingleOrDefault(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    user.UserImage = null;
+                    repo.Update(user);
+                }
             }
 
             return RedirectToAction("Settings", "Account", new { @message = "deleted" });

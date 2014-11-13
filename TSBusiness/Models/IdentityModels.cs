@@ -8,6 +8,9 @@ namespace TSBusiness.Models
         public string WebSite { get; set; }
         public string CompanyName { get; set; }
         public int CountryId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string UserImage { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
